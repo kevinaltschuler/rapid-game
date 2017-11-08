@@ -1,0 +1,26 @@
+.actionButton {
+	width: 150px;
+	height: 150px;
+	background-color: #fff;
+	border-radius: 8px;
+	border: 4px solid #666;
+	outline: none !important;
+	margin: 15px 15px;
+	padding: 0px;
+	transition: all .1s linear;
+	cursor: pointer;
+
+	&:hover {
+		transform: scale(1.1);
+		transition: all .2s cubic-bezier(.61,.28,.56,1.46);
+	}
+
+	&:active {
+	    transform: scale(.95);
+	    transition: all .1s cubic-bezier(.61,.28,.56,1.46);
+	}
+
+	&.disabled {
+		background-color: #aaa;
+	}
+}

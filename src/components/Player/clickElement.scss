@@ -1,0 +1,23 @@
+.clickElement {
+	position: absolute;
+	opacity: 1;
+	animation: .6s ease-out fadeOut;
+	animation-fill-mode: forwards;
+	font-size: 24px;
+	font-weight: bold;
+	position: absolute;
+	margin-top: 80px;
+	z-index: 99;
+	pointer-events: none;
+}
+
+@keyframes fadeOut {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-30px);
+    opacity: 0;
+  }
+}
