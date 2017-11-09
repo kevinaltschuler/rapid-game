@@ -2,7 +2,7 @@ const data = {
 	name: '',
 	health: 5,
 	coins: 0,
-	clickValue: 100,
+	clickValue: 20,
 	attacking: false,
 	defending: false
 }

@@ -1,8 +1,46 @@
 .actionButton {
   width: 150px;
-  height: 150px; }
+  height: 150px;
+  background-color: #fff;
+  border-radius: 8px;
+  border: 4px solid #666;
+  outline: none !important;
+  margin: 15px 15px;
+  padding: 0px;
+  transition: all .1s linear;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  .actionButton:hover {
+    transform: scale(1.1);
+    transition: all 0.2s cubic-bezier(0.61, 0.28, 0.56, 1.46); }
+  .actionButton:active {
+    transform: scale(0.95);
+    transition: all 0.1s cubic-bezier(0.61, 0.28, 0.56, 1.46); }
+  .actionButton.disabled {
+    background-color: #aaa; }
 
-body {
-  padding: 20px; }
+.action-loader {
+  width: 80%;
+  height: 80%; }
+.clickElement {
+  position: absolute;
+  opacity: 0;
+  animation: .8s ease-out fadeOut;
+  font-size: 24px;
+  font-weight: bold;
+  position: absolute;
+  z-index: 99;
+  pointer-events: none; }
+
+@keyframes fadeOut {
+  0% {
+    transform: translateY(0);
+    opacity: 1; }
+  100% {
+    transform: translateY(-100px);
+    opacity: 0; } }
 
 /*# sourceMappingURL=styles.css.map*/
