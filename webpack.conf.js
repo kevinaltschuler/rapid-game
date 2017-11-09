@@ -38,6 +38,12 @@ module.exports = {
           }
         ]
     },
+    resolve: {
+        alias: {
+            'react': 'inferno-compat',
+            'react-dom': 'inferno-compat'
+        }
+    },
     devServer: {
         contentBase: './',
         port: 8080,

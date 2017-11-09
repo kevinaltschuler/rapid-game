@@ -1,5 +1,6 @@
 import Inferno from 'inferno';
 import Component from 'inferno-component';
+import ProgressBar from 'progressbar.js';
 
 import defaultPlayerData from './defaultPlayerData';
 import ActionButton from './../ActionButton/ActionButton.js';
@@ -15,17 +16,21 @@ export default class Player extends Component {
             clickElements: [],
         };
         let defaultData = defaultPlayerData;
-        defaultData.name = 'Player ' + Number(this.state.id + 1);
+        defaultData.name = this.state.id;
         this.state = Object.assign(this.state, defaultData);
 
         this.click = this.click.bind(this);
         this.attack = this.attack.bind(this);
         this.defend = this.defend.bind(this);
         this.componentDidMount = this.componentDidMount.bind(this);
+        this.clickTimer = setTimeout(() => { 
+            this.setState({ clickElements: [] });
+        }, 1000);
+
     }
 
     componentDidMount() {
-        const playerRef = firebase.database().ref('player' + this.state.id)
+        const playerRef = firebase.database().ref(this.state.id)
 
         playerRef.once('value', (snapshot) => {
             this.setState(snapshot.val());
@@ -38,16 +43,20 @@ export default class Player extends Component {
     }
 
     click() {
-        const coinsRef = firebase.database().ref('player' + this.state.id + '/coins');
+        const coinsRef = firebase.database().ref(this.state.id + '/coins');
         const coins = this.state.coins + this.state.clickValue || 0;
         coinsRef.set(coins);
-        let clickElements = this.state.clickElements;
-        clickElements.push(<ClickElement clickValue={this.state.clickValue} />);
+        let clickElements = this.state.clickElements || [];
+        clickElements.push(<ClickElement id={Math.random()} clickValue={this.state.clickValue} />);
         this.setState({ clickElements });
+        clearTimeout(this.clickTimer);
+        this.clickTimer = setTimeout(() => { 
+            this.setState({ clickElements: [] });
+        }, 800);
     }
 
     pay(amnt) {
-        const coinsRef = firebase.database().ref('player' + this.state.id + '/coins');
+        const coinsRef = firebase.database().ref(this.state.id + '/coins');
         let coins = this.state.coins - amnt;
         if(coins < 0) {
             coins = 0;
@@ -59,23 +68,24 @@ export default class Player extends Component {
     }
 
     attack() {
-        if(this.state.coins >= 100) {
-            this.pay(100);
-            const attackingRef = firebase.database().ref('player' + this.state.id + '/attacking');
+        if(this.state.coins >= 100 && !this.state.attacking) {
+            this.pay(100)
+            const attackingRef = firebase.database().ref(this.state.id + '/attacking');
             attackingRef.set(true);
 
             this.setState({attacking: true});
 
-            setTimeout(function() { 
-                attackingRef.set(false); 
+            setTimeout(() => { 
+                this.props.attack(this.props.id);
+                attackingRef.set(false);
             }, 3000);
         }
     }
 
     defend() {
-        if(this.state.coins >= 100) {
+        if(this.state.coins >= 100 && !this.state.defending) {
             this.pay(100);
-            const defendingRef = firebase.database().ref('player' + this.state.id + '/defending');
+            const defendingRef = firebase.database().ref(this.state.id + '/defending');
             defendingRef.set(true);
 
             this.setState({defending: true});
@@ -87,6 +97,10 @@ export default class Player extends Component {
     }
 
     render() {
+        const hearts = [];
+        for(var i = 0; i < this.state.health; i++) {
+            hearts.push(<img width='24' alt='heart' src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/OOjs_UI_icon_heart.svg/2000px-OOjs_UI_icon_heart.svg.png'/>);
+        }
         return (
             <div
                 style={{
@@ -98,6 +112,8 @@ export default class Player extends Component {
                 }}
             >
                 { this.state.clickElements }
+                { this.state.attackEffect }
+                { this.state.defendEffect }
                 {/* player header */}
                 <div
                     style={{
@@ -105,14 +121,14 @@ export default class Player extends Component {
                         flexDirection: 'row',
                         justifyContent: 'space-between',
                         padding: '10px 0px',
-                        width: '200px'
+                        width: '500px'
                     }}
                 >
                     <div>
                         {this.state.name}
                     </div>
                     <div>
-                        health: {this.state.health}
+                        {hearts}
                     </div>
                 </div>
                 {/* player actions */}
@@ -120,15 +136,18 @@ export default class Player extends Component {
                     <ActionButton
                         disabled={this.state.defending}
                         onClick={this.defend} 
+                        id={this.props.id + 'defend'}
                         content={<img width='112' alt='shield' src='https://cdns.iconmonstr.com/wp-content/assets/preview/2017/240/iconmonstr-shield-33.png'/>}
                     />
                     <ActionButton
                         onClick={this.click}
+                        id={2}
                         content={this.state.coins}
                     />
                     <ActionButton
                         disabled={this.state.attacking}
                         onClick={this.attack} 
+                        id={this.props.id + 'attack'}
                         content={<img width='128' alt="Sword" src="http://www.clker.com/cliparts/2/a/P/l/b/r/black-sword.svg"/>}
                     />
                 </div>

@@ -1,8 +1,8 @@
 const data = {
-	name: 'blah',
-	health: 100,
+	name: '',
+	health: 5,
 	coins: 0,
-	clickValue: 1,
+	clickValue: 100,
 	attacking: false,
 	defending: false
 }

@@ -9,6 +9,10 @@
 	padding: 0px;
 	transition: all .1s linear;
 	cursor: pointer;
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 
 	&:hover {
 		transform: scale(1.1);
@@ -23,4 +27,9 @@
 	&.disabled {
 		background-color: #aaa;
 	}
+}
+
+.action-loader {
+	width: 80%;
+	height: 80%;
 }
