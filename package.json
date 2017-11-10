@@ -4,7 +4,7 @@
   "description": "A basic boilerplate to get you started with Inferno + Inferno Router + JSX",
   "main": "src/index.js",
   "scripts": {
-    "dev": "webpack-dev-server --quiet --config webpack.conf.js --host 0.0.0.0",
+    "test": "webpack-dev-server --quiet --config webpack.conf.js --host 0.0.0.0",
     "start": "node ./public/app.js",
     "build": "webpack --config webpack.conf.js",
     "lint": "eslint src"

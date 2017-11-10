@@ -1,6 +1,7 @@
 import Inferno from 'inferno';
 import Component from 'inferno-component';
 import Player from './components/player/Player.js';
+import defaultPlayerData from './components/Player/defaultPlayerData.js';
 
 import firebase from './firebase.js';
 
@@ -42,6 +43,16 @@ export default class GameContainer extends Component {
         });
 	}
 
+	reset() {
+		for(var key in PLAYERS) {
+			const player = PLAYERS[key]
+			const playerRef = firebase.database().ref(player);
+			playerRef.set(defaultPlayerData);
+			const playerNameRef = firebase.database().ref(player + '/name');
+			playerNameRef.set(player);
+		}
+	}
+
 	render() {
 		return (
 			<div 
@@ -53,6 +64,9 @@ export default class GameContainer extends Component {
 					justifyContent: 'space-between'
 				}}
 			>
+				<button onClick={this.reset} style={{ zIndex: 99, position: 'absolute', top: '20px', right: '20px'}}>
+					reset
+				</button>
 				{ this.renderPlayers() }
 			</div>
 		)
