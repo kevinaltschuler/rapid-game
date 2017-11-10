@@ -1,0 +1,20 @@
+abilities
+
+	silence (no abilities)
+
+
+upgrades
+	
+	miner: +1 cps
+
+	sword:
+		normal: free
+			one hit after 3s
+
+		double tapper: $500
+			2 consecutive hits, costs $200 per swing
+
+	shield:
+		normal: free
+			hold
+
