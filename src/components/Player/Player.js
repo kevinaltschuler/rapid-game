@@ -183,7 +183,7 @@ export default class Player extends Component {
 
         const width = 180*this.state.swords.length;
 
-        return <div style={{display: 'flex', minWidth: width}}>{shields}</div>;
+        return <div style={{display: 'flex', minWidth: width, justifyContent: 'flex-end'}}>{shields}</div>;
     }
 
     renderSwords() {
@@ -215,7 +215,7 @@ export default class Player extends Component {
 
         const width = 180*this.state.shields.length;
 
-        return <div style={{display: 'flex', minWidth: width}}>{swords}</div>;
+        return <div style={{display: 'flex', minWidth: width, justifyContent: 'flex-start'}}>{swords}</div>;
     }
 
     idGenerator() {
