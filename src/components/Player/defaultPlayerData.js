@@ -4,7 +4,10 @@ const data = {
 	coins: 0,
 	clickValue: 10,
 	attacking: false,
-	defending: false
+	defending: false,
+	clickers: 0,
+	swords: [],
+	shields: []
 }
 
 export default data;

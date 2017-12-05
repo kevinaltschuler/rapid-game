@@ -1,0 +1,28 @@
+.upgradeButton {
+	width: 150px;
+	height: 80px;
+	background-color: #fff;
+	border-radius: 8px;
+	border: 4px solid #666;
+	outline: none !important;
+	margin: 15px 15px;
+	padding: 0px;
+	cursor: pointer;
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	&:hover {
+		background-color: #aaa;
+	}
+
+	&:active {
+		color: white;
+		border-color: white;
+	}
+
+	&.disabled {
+		background-color: #aaa;
+	}
+}

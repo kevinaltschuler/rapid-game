@@ -25,6 +25,29 @@
 .action-loader {
   width: 80%;
   height: 80%; }
+.upgradeButton {
+  width: 150px;
+  height: 150px;
+  background-color: #fff;
+  border-radius: 8px;
+  border: 4px solid #666;
+  outline: none !important;
+  margin: 15px 15px;
+  padding: 0px;
+  transition: all .1s linear;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  .upgradeButton:hover {
+    transform: scale(1.1);
+    transition: all 0.2s cubic-bezier(0.61, 0.28, 0.56, 1.46); }
+  .upgradeButton:active {
+    transform: scale(0.95);
+    transition: all 0.1s cubic-bezier(0.61, 0.28, 0.56, 1.46); }
+  .upgradeButton.disabled {
+    background-color: #aaa; }
 .clickElement {
   position: absolute;
   opacity: 0;

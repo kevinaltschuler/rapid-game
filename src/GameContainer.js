@@ -25,12 +25,29 @@ export default class GameContainer extends Component {
 	attack(attackerId) {
 		const otherID = PLAYERS.filter((id) => id != attackerId)[0];
 
-		const otherPlayerDefRef = firebase.database().ref(otherID + '/defending');
+		const otherPlayerShieldsRef = firebase.database().ref(otherID + '/shields');
 
-        otherPlayerDefRef.once('value', (snapshot) => {
-            if(snapshot.val()) {
-            	return;
-            } else {
+        otherPlayerShieldsRef.once('value', (_snapshot) => {
+        	if(_snapshot.val()) {
+	        	for(var i = 0; i < _snapshot.val().length; i++) {
+	        		const shieldId = _snapshot.val()[i];
+	        		const defRef = firebase.database().ref(otherID + '/defending' + shieldId);
+	        		defRef.once('value', (snapshot) => {
+			            if(snapshot.val()) {
+			            	return;
+			            } else {
+			            	const otherPlayerHealthRef = firebase.database().ref(otherID + '/health');
+			            	otherPlayerHealthRef.once('value', (snapshot) => {
+			            		if(snapshot.val() > 0)
+			            			otherPlayerHealthRef.set(snapshot.val() - 1);
+			            		else {
+			            			otherPlayerHealthRef.set(0);
+			            		}
+			            	})
+			            }
+			        });
+		        }
+		    } else {
             	const otherPlayerHealthRef = firebase.database().ref(otherID + '/health');
             	otherPlayerHealthRef.once('value', (snapshot) => {
             		if(snapshot.val() > 0)
